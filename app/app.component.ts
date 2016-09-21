@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
-import { Hero } from './hero';
-import { HeroService } from './hero.service';
-import { OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {Hero} from './hero';
+import {HeroService} from './hero.service';
+import {OnInit} from '@angular/core';
 
 @Component({
-	selector: 'my-app',
-	template:`
+    selector: 'my-app',
+    template: `
 		<h1>{{title}}</h1>
+       <a routerLink="/heroes">Heroes</a>
+       <router-outlet></router-outlet>
 		<div *ngIf="selectedHero">
 		  <h2>{{selectedHero.name}} details!</h2>
 		</div>
@@ -19,9 +21,10 @@ import { OnInit } from '@angular/core';
 		  </li>
 		</ul>
 		<my-hero-detail [hero]='selectedHero'></my-hero-detail>
+		
   	`,
 
-  	styles: [`
+    styles: [`
 	  .selected {
 	    background-color: #CFD8DC !important;
 	    color: white;
@@ -71,36 +74,41 @@ import { OnInit } from '@angular/core';
 	  }
 	`],
 
-	providers: [HeroService]
+    providers: [HeroService]
 
 })
 
-export class AppComponent implements OnInit{
-	constructor(private heroService: HeroService){ };
-	ngOnInit(): void {
-		this.getHeroes();
-	}
-	title = 'Tour of Heroes';
-	hero: Hero = {
-		id: 1,
-		name: 'windstorm'
-	};
-	heroes = HEROES;
-	// heroes = this.heroService.getHeroes();
-	getHeroes(): void {
-		this.heroService.getHeroes().then(heroes => this.heroes = heroes);
-	};
-	selectedHero: Hero;
-	onSelect(hero: Hero): void {
-	  this.selectedHero = hero;
-	};
+export class AppComponent implements OnInit {
+    constructor(private heroService: HeroService) {
+    };
+
+    ngOnInit(): void {
+        this.getHeroes();
+    }
+
+    title = 'Tour of Heroes';
+    hero: Hero = {
+        id: 1,
+        name: 'windstorm'
+    };
+    heroes = HEROES;
+    // heroes = this.heroService.getHeroes();
+    getHeroes(): void {
+        this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+    };
+
+    selectedHero: Hero;
+
+    onSelect(hero: Hero): void {
+        this.selectedHero = hero;
+    };
 }
 
 const HEROES: Hero[] = [
-	{ id: 11, name: 'An'},
-	{ id: 12, name: 'Binh'},
-	{ id: 13, name: 'Chi'},
-	{ id: 14, name: 'Dat'},
-	{ id: 16, name: 'Em'},
-	{ id: 17, name: 'Giang'}
+    {id: 11, name: 'An'},
+    {id: 12, name: 'Binh'},
+    {id: 13, name: 'Chi'},
+    {id: 14, name: 'Dat'},
+    {id: 16, name: 'Em'},
+    {id: 17, name: 'Giang'}
 ];
